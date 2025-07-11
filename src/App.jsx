@@ -30,6 +30,7 @@ const formData = {
 
 function App() {
   const [data, setData] = useState({ formData });
+  const [isFormSent, setIsFormSent] = useState(false);
 
   const maskValue = (value, maskType) => {
     if (!maskType) return value;
@@ -37,7 +38,7 @@ function App() {
 
     const masks = ['phone', 'cep'];
 
-    if(masks.includes(maskType)) value = value.replace(/\D/g, '');
+    if (masks.includes(maskType)) value = value.replace(/\D/g, '');
 
     switch (maskType) {
       case 'phone':
@@ -78,6 +79,8 @@ function App() {
     });
   }
 
+  const hideFormMessage = ()=> setIsFormSent(false);
+
   const formComponents = [
     <PersonalDataForm data={data} updateFieldHandler={updateFieldHandler} />,
     <AdressForm data={data} updateFieldHandler={updateFieldHandler} />,
@@ -102,27 +105,41 @@ function App() {
 
           <div className="steps">
             <Step stepId='0' text="Dados pessoais" icon={<FaRegUser />}
-              currentStep={currentStep} changeStep={changeStep} />
+              currentStep={currentStep} changeStep={changeStep} hideFormMessage={hideFormMessage} />
 
             <Step stepId='1' text="Endereço" icon={<FaMapMarkerAlt />}
-              currentStep={currentStep} changeStep={changeStep} />
+              currentStep={currentStep} changeStep={changeStep} hideFormMessage={hideFormMessage} />
 
             <Step stepId='2' text="Avaliação" icon={<FaRegThumbsUp />}
-              currentStep={currentStep} changeStep={changeStep} />
+              currentStep={currentStep} changeStep={changeStep} hideFormMessage={hideFormMessage} />
 
             <Step stepId='3' text="Finalização" icon={<FaRegEnvelope />}
-              currentStep={currentStep} changeStep={changeStep} />
+              currentStep={currentStep} changeStep={changeStep} hideFormMessage={hideFormMessage} />
           </div>
 
           <form onSubmit={(e => {
-            changeStep(currentStep + 1, e)
+            changeStep(currentStep + 1, e);
+            hideFormMessage();
           })}>
 
             {currentComponent}
 
+            {
+              isFormSent && (
+                <div className="form-message">
+                  Mensagem enviada com sucesso!
+                </div>
+              )
+            }
+
             <div className="action-container">
+
               {
-                !isFirstStep && (<button type='button' onClick={() => changeStep(currentStep - 1)}>
+                !isFirstStep && (<button type='button' onClick={() => {
+                  hideFormMessage();
+                  changeStep(currentStep - 1);
+                    }
+                  }>
                   <GrFormPrevious />
                   Anterior
                 </button>
@@ -132,7 +149,7 @@ function App() {
                   Próximo
                   <GrFormNext />
                 </button>
-                ) : (<button type='submit'>
+                ) : (<button type='button' onClick={() => setIsFormSent(true)}>
                   <FiSend />
                   Enviar
                 </button>
@@ -142,8 +159,6 @@ function App() {
           </form>
 
         </div>
-
-
       </div>
     </div>
   )

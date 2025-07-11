@@ -1,13 +1,14 @@
 import './Step.css';
 
-const Step = ({text, stepId, currentStep, changeStep, icon}) => {
+const Step = ({text, stepId, currentStep, changeStep, icon, hideFormMessage}) => {
   const convertedStepId = parseInt(stepId);
 
   return (
       <div className={`step-item ${convertedStepId === currentStep ? 'active' : ''}`}>
         
     <button onClick={(e)=>{
-      changeStep(convertedStepId)
+      hideFormMessage();
+      changeStep(convertedStepId);
     }}>
         {icon}
         <span>
