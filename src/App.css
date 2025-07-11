@@ -73,6 +73,11 @@ label{
   svg{
     fill: var(--colorGold);
   }
+
+  p:not(:last-of-type){
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgb(from var(--colorDarkGray) r g b / .6);
+  }
 }
 
 .action-container{
