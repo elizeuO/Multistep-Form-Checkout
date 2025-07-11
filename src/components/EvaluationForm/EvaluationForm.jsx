@@ -30,8 +30,8 @@ const EvaluationForm = ({ data, updateFieldHandler }) => {
       </label>
 
       <label>
-        <input type="radio" name="review" value="Neutral"
-          required checked={data.review === 'Neutral' ? true : false} onChange={(e) => {
+        <input type="radio" name="review" value="neutral"
+          required checked={data.review === 'neutral' ? true : false} onChange={(e) => {
             updateFieldHandler('review', e.target.value);
           }} />
           <BsFillEmojiNeutralFill />

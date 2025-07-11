@@ -19,7 +19,7 @@ const PersonalDataForm = ({data, updateFieldHandler }) => {
         *Seu telefone:
         <input type="text" name="phone"
           required value={data.phone || ''} onChange={(e) => {
-            updateFieldHandler('phone', e.target.value);
+            updateFieldHandler('phone', e.target.value, 'phone');
           }} />
       </label>
 

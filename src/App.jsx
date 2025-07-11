@@ -31,9 +31,50 @@ const formData = {
 function App() {
   const [data, setData] = useState({ formData });
 
-  const updateFieldHandler = (key, value) => {
+  const maskValue = (value, maskType) => {
+    if (!maskType) return value;
+    let maskedValue = '';
+
+    const masks = ['phone', 'cep'];
+
+    if(masks.includes(maskType)) value = value.replace(/\D/g, '');
+
+    switch (maskType) {
+      case 'phone':
+        if (value.length >= 11) {
+          maskedValue = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+        } else if (value.length >= 10) {
+          maskedValue = value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+        } else if (value.length > 6) {
+          maskedValue = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+        } else if (value.length > 2) {
+          maskedValue = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+        } else if (value.length > 0) {
+          maskedValue = value.replace(/^(\d*)/, '($1');
+        } else {
+          maskedValue = '';
+        }
+
+        break;
+
+      case 'cep':
+        value = value.slice(0, 8);
+        maskedValue = value.replace(/^(\d{5})(\d{0,3})/, '$1-$2');
+        break;
+
+      default:
+        return value;
+        break;
+    }
+
+    return maskedValue;
+  }
+
+  const updateFieldHandler = (key, value, maskType) => {
+    let treatedValue = maskValue(value, maskType)
+
     setData((prev) => {
-      return { ...prev, [key]: value };
+      return { ...prev, [key]: treatedValue };
     });
   }
 
@@ -93,9 +134,9 @@ function App() {
                 </button>
                 ) : (<button type='submit'>
                   <FiSend />
-                Enviar
-              </button>
-              )}
+                  Enviar
+                </button>
+                )}
 
             </div>
           </form>

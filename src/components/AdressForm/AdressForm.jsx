@@ -19,7 +19,7 @@ const AdressForm = ({data, updateFieldHandler}) => {
         *Seu CEP:
         <input type="text" name="cep"
           required value={data.cep || ''} onChange={(e) => {
-            updateFieldHandler('cep', e.target.value);
+            updateFieldHandler('cep', e.target.value, 'cep');
           }} />
       </label>
    </>
