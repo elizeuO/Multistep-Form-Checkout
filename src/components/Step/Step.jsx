@@ -1,13 +1,15 @@
-import { FaRegUser } from "react-icons/fa6";
-
 import './Step.css';
 
-const Step = ({text}) => {
+const Step = ({text, stepId, currentStep, changeStep, icon}) => {
+  const convertedStepId = parseInt(stepId);
+
   return (
-    <div className="step-item active">
+      <div className={`step-item ${convertedStepId === currentStep ? 'active' : ''}`}>
         
-    <button>
-        <FaRegUser />
+    <button onClick={(e)=>{
+      changeStep(convertedStepId)
+    }}>
+        {icon}
         <span>
         {text}
         </span>

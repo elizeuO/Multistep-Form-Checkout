@@ -1,5 +1,5 @@
 .step-item{
-    --gap: 6rem;
+    --gap: 5rem;
 
     position: relative;
 
@@ -41,27 +41,17 @@
         span{
             display: block;
             position: absolute;
-            min-width: 100px;
-            color: var(--colorLightGray);
             top: 50%;
             left: calc(100% + .8rem);
+            color: var(--colorLightGray);
+            font-size: 1.6rem;
             transform: translatey(-50%);
             transition: all 300ms;
-        }
-
-        &:is(:hover, :focus){
-            background: var(--colorGold);
-
-            span{
-                color: white;
-            }
         }
 
         svg{
             fill: white;
         }
-
-       
     }
 
     &:not(:last-child) button:before{
@@ -76,8 +66,12 @@
         translate: -50% 0;
     }
 
-    &.active button span{
-        color: white;
-    }
+    &.active button, button:is(:hover, :focus){
+        background: var(--colorGold);
+
+        span{
+            color: white;
+        }
+    } 
 }
 

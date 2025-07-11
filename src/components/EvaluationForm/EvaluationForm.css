@@ -1,0 +1,37 @@
+.review-wrapper{
+    display: flex;
+    gap: 4rem;
+    margin: 4rem 0;
+
+    label{
+        position: relative;
+        transition: all 300ms;
+
+        svg{
+            display: block;
+            margin: 0 auto .5rem;
+            height: 3rem;
+            width: 3rem;
+            fill: white;
+        }
+
+        &:is(:hover, :focus, &:has([type=radio]:checked)){
+            color: white;
+
+            svg{
+                fill: var(--colorGold);
+            }
+        }
+
+        [type=radio]{
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        
+
+        
+    }
+}
